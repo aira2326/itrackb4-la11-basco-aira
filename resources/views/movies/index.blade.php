@@ -26,10 +26,10 @@
             text-decoration: none; 
             font-size: 0.9rem;
         }
-        .btn-all { background: #6c757d; }    /* Gray */
-        .btn-sci { background: #007bff; }   /* Blue */
-        .btn-act { background: #ffc107; color: #212529; } /* Yellow */
-        .btn-crime { background: #dc3545; } /* Red */
+        .btn-all { background: #6c757d; }
+        .btn-sci { background: #007bff; }
+        .btn-act { background: #ffc107; color: #212529; }
+        .btn-crime { background: #dc3545; }
         
         .all-genre { 
             text-align: center; 
@@ -48,11 +48,10 @@
 </head>
 <body>
 
-
+<p class="prepared">Prepared by Aira Basco</p>
 
 <h1>My Movie Collection</h1>
 
-{{-- ✅ Mga button sa itaas — katulad ng larawan --}}
 <div class="nav-buttons">
     <span class="nav-label">Movies</span>
     <a href="{{ route('movies.index') }}" class="nav-btn btn-all">All Movies</a>
@@ -61,7 +60,7 @@
     <a href="{{ route('movies.index', ['genre_id' => 3]) }}" class="nav-btn btn-crime">Crime</a>
 </div>
 
-<p class="prepared">Prepared by Aira Basco</p>
+<p class="all-genre">All Genre</p>
 
 <table>
     <thead>
@@ -86,7 +85,7 @@
             <td>{{ $movie->director }}</td>
             <td>{{ $movie->genre->name }}</td>
             <td>{{ $movie->is_featured ? 'Yes' : 'No' }}</td>
-            <td>{{ $movie->description ?? '—' }}</td>
+            <td></td> {{-- ✅ Nandoon ang column pero walang laman --}}
         </tr>
         @endforeach
     </tbody>

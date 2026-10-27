@@ -1,9 +1,10 @@
- 
- G1 — Column turned into a table
-I turned the `genre` column into its own `genres` table because genre is drawn from a fixed list, the same values repeat across many movies, and it could one day need extra details like a description or category. Fields like `year` or `is_featured` are just raw values and don't need their own table.
+ LA10 — Subject Lookup Table
 
- G2 — Screenshot 6 query count
-Screenshot 6 showed **7 queries**: 1 to fetch all 6 movies, then 6 separate queries — one for each movie's genre — because of lazy loading (the N+1 problem). After adding `with('genre')`, it dropped to **2** queries total.
+ G1
+I turned the `is_active` column into a `statuses` lookup table. I chose this column because it contains fixed, repeating values (Active/Inactive) that could expand later (e.g., Pending, Archived). Other columns like `code`, `title`, or `units` are unique or descriptive and do not represent shared categories.
 
- G3 — Why belongsTo must be singular
-If I named the method `genres()` (plural) instead of `genre()`, Eloquent would look for a foreign key column called `genres_id` instead of `genre_id`. Since that column doesn't exist, every `$movie->genre` call would fail or return null.
+ G2
+Screenshot 6 showed **10 queries**. This happened because every row in the list performed a separate query to look up its related status — 1 query to fetch all subjects plus 9 separate queries (one for each subject's status). This is the N+1 query problem.
+
+G3
+If I named the method `statuses()` in plural instead of singular `status()`, Eloquent would automatically search for a foreign key column named `statuses_id` which does not exist in my table. The relationship would fail and throw an error because it cannot find the expected column.
