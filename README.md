@@ -1,10 +1,8 @@
- LA10 — Subject Lookup Table
+ LA11 — Movies 
 
- G1
-I turned the `is_active` column into a `statuses` lookup table. I chose this column because it contains fixed, repeating values (Active/Inactive) that could expand later (e.g., Pending, Archived). Other columns like `code`, `title`, or `units` are unique or descriptive and do not represent shared categories.
-
- G2
-Screenshot 6 showed **10 queries**. This happened because every row in the list performed a separate query to look up its related status — 1 query to fetch all subjects plus 9 separate queries (one for each subject's status). This is the N+1 query problem.
-
-G3
-If I named the method `statuses()` in plural instead of singular `status()`, Eloquent would automatically search for a foreign key column named `statuses_id` which does not exist in my table. The relationship would fail and throw an error because it cannot find the expected column.
+G1 — Route Model Binding
+Needs two things: (1) the parameter is type-hinted with the model class, and (2) the parameter name exactly matches the route segment (e.g. `{movie}` → `$movie`). If only the type-hint is correct but the name doesn't match, no record loads and there is no error — the parameter stays empty or finds nothing.
+ G2 — Delete Link 404
+The address was correct because Laravel generates it properly, but a link sends a **GET** request while the `destroy` route only answers **DELETE**. The method verb matters as much as the URL itself.
+ G3 — old() Second Argument
+If left out, the form stays blank after a failed submit — nothing fills in. If used alone without `old()` as the first value, the form always shows the original database value even after a failed edit — the user's typed changes disappear. Using both keeps their input visible when validation fails.
